@@ -77,6 +77,7 @@ export class SolarComponent implements OnInit {
     resizable: true,
     editable: true,
     // floatingFilter: true,
+    cellStyle: {'border-left': '0.5px solid #ccc', 'border-right': '0.5px solid #ccc'},
     width: 120,
   };
 
@@ -98,7 +99,13 @@ export class SolarComponent implements OnInit {
       { headerName: 'Qty', field: 'qty' },
       { headerName: 'Power (W)', field: 'power' },
       { headerName: 'Time (hrs)', field: 'time1' },
-      { headerName: 'Energy (kWh)', field: 'energy1' },
+      { headerName: 'Energy (kWh)', field: 'energy1',
+      cellRenderer: (row: any) => {
+        console.log('data :>> 123123', row);
+        const vvv: number = (Number(row.data.qty) * 0.5 * Number(row.data.power) * Number(row.data.time1) / 1000);
+        console.log('vvv: ', vvv);
+        return String(vvv);
+      } },
       { headerName: 'Time (hrs)', field: 'time2' },
       { headerName: 'Energy (kWh)', field: 'energy2' },
       { headerName: 'Energy (kWh)', field: 'energy3' },
@@ -111,7 +118,7 @@ export class SolarComponent implements OnInit {
     this.rowsData = [
       { appliances: 'KITCHEN GENERAL', qty: '', power: '', time1: '', energy1: '', time2: '',
     energy2: '', energy3: '', powerFactor: '', contribution: '', surge: '', inverter: '' },
-      { appliances: 'Dishwasher', qty: '1.00', power: '1,200', time1: '1', energy1: '0.6', time2: '1',
+      { appliances: 'Dishwasher', qty: '1.00', power: '1200', time1: '1', energy1: '0.6', time2: '1',
     energy2: '0.6', energy3: '0.6', powerFactor: '0.9', contribution: '1.33', surge: '1', inverter: '1.33' },
     { appliances: 'Fridge', qty: '1.00', power: '150', time1: '12', energy1: '1.8', time2: '10',
     energy2: '1.5', energy3: '1.7', powerFactor: '0.9', contribution: '0.17', surge: '1', inverter: '0.17' },
