@@ -73,6 +73,7 @@ export class SolarComponent implements OnInit {
   ];
 
   defaultColDef: ColDef = {
+    flex: 1,
     sortable: false,
     resizable: true,
     editable: true,
@@ -102,9 +103,14 @@ export class SolarComponent implements OnInit {
       { headerName: 'Energy (kWh)', field: 'energy1',
       cellRenderer: (row: any) => {
         console.log('data :>> 123123', row);
-        const vvv: number = (Number(row.data.qty) * 0.5 * Number(row.data.power) * Number(row.data.time1) / 1000);
-        console.log('vvv: ', vvv);
-        return String(vvv);
+        var value: number | string = '';
+        if(row.data.appliances === 'Dishwasher'){
+          value = (Number(row.data.qty) * 0.5 * Number(row.data.power) * Number(row.data.time1) / 1000);
+        }else{
+          value = Number(row.data.qty) ? (Number(row.data.qty) * Number(row.data.power) * Number(row.data.time1) / 1000) : '';
+        }
+
+        return value;
       } },
       { headerName: 'Time (hrs)', field: 'time2' },
       { headerName: 'Energy (kWh)', field: 'energy2' },
