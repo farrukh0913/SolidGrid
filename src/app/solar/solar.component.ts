@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GridApi, ColumnApi, ColDef, ColGroupDef } from 'ag-grid-community';
+import { IRowData } from './solar.model';
 
 @Component({
   selector: 'app-solar',
@@ -9,7 +10,8 @@ import { GridApi, ColumnApi, ColDef, ColGroupDef } from 'ag-grid-community';
 export class SolarComponent implements OnInit {
   private gridApi!: GridApi<any>;
   private gridColumnApi!: ColumnApi;
-  public columnDefs: (ColDef | ColGroupDef)[] = [
+  rowsData: IRowData[] = [];
+  columnDefs: (ColDef | ColGroupDef)[] = [
     {
       headerName: 'Athlete Details',
       children: [
@@ -69,14 +71,15 @@ export class SolarComponent implements OnInit {
       ],
     },
   ];
-  public defaultColDef: ColDef = {
+
+  defaultColDef: ColDef = {
     sortable: false,
     resizable: true,
+    editable: true,
     // floatingFilter: true,
-    cellStyle: {'border-right': '0.25px ridge #ccc', 'border-left': '0.25px ridge #ccc'},
     width: 120,
   };
-  public rowData: any[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -105,7 +108,7 @@ export class SolarComponent implements OnInit {
       { headerName: 'Inverter peak load', field: 'inverter' },
     ];
 
-    this.rowData = [
+    this.rowsData = [
       { appliances: 'KITCHEN GENERAL', qty: '', power: '', time1: '', energy1: '', time2: '',
     energy2: '', energy3: '', powerFactor: '', contribution: '', surge: '', inverter: '' },
       { appliances: 'Dishwasher', qty: '1.00', power: '1,200', time1: '1', energy1: '0.6', time2: '1',
